@@ -3,13 +3,18 @@ import { useState } from "react";
 const DiaryItem = ({ id, onRemove, author, content, create_date, emotion }) => {
   const [isEdit, setIsEdit] = useState(false);
   const toggleIsEdit = () => setIsEdit(!isEdit);
-  const [localContent, setLocalContent] = useState("");
+  const [localContent, setLocalContent] = useState(content);
 
   const handleRemove = () => {
     console.log(id);
     if (window.confirm(`${id}번째 일기를 정말 삭제하시겠습니까?`)) {
       onRemove(id);
     }
+  };
+
+  const handleQuitEdit = () => {
+    setIsEdit(false);
+    setLocalContent(content);
   };
 
   return (
@@ -35,7 +40,7 @@ const DiaryItem = ({ id, onRemove, author, content, create_date, emotion }) => {
       </div>
       {isEdit ? (
         <>
-          <button onClick={toggleIsEdit}>수정 취소</button>
+          <button onClick={handleQuitEdit}>수정 취소</button>
           <button>수정 완료</button>
         </>
       ) : (
